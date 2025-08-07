@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using perpuss.Data;
 
@@ -10,10 +11,12 @@ using perpuss.Data;
 
 namespace perpuss.Migrations
 {
-    [DbContext(typeof(PerpustakaanContext))]
-    partial class PerpustakaanContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(LibraryContext))]
+    [Migration("20250807051849_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,70 @@ namespace perpuss.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("perpuss.Models.Anggota", b =>
+            modelBuilder.Entity("perpuss.Models.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PublicationYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("perpuss.Models.Loan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LoanDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("Loans");
+                });
+
+            modelBuilder.Entity("perpuss.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,99 +100,36 @@ namespace perpuss.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NIM")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nama")
+                    b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Anggotas");
+                    b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("perpuss.Models.Buku", b =>
+            modelBuilder.Entity("perpuss.Models.Loan", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Judul")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("JumlahStok")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Penulis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TahunTerbit")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bukus");
-                });
-
-            modelBuilder.Entity("perpuss.Models.Peminjaman", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnggotaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BukuId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("SudahKembali")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("TanggalKembali")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TanggalPinjam")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnggotaId");
-
-                    b.HasIndex("BukuId");
-
-                    b.ToTable("Peminjamans");
-                });
-
-            modelBuilder.Entity("perpuss.Models.Peminjaman", b =>
-                {
-                    b.HasOne("perpuss.Models.Anggota", "Anggota")
+                    b.HasOne("perpuss.Models.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("AnggotaId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("perpuss.Models.Buku", "Buku")
+                    b.HasOne("perpuss.Models.Member", "Member")
                         .WithMany()
-                        .HasForeignKey("BukuId")
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Anggota");
+                    b.Navigation("Book");
 
-                    b.Navigation("Buku");
+                    b.Navigation("Member");
                 });
 #pragma warning restore 612, 618
         }

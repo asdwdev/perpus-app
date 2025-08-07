@@ -2,15 +2,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace perpuss.Models
 {
-    public class Anggota
+    public class Member
     {
         public int Id { get; set; }
 
         [Required]
-        public string Nama { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string NIM { get; set; }
+        public string StudentId { get; set; }
 
         public string Email { get; set; }
     }

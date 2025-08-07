@@ -4,7 +4,7 @@ using perpuss.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Tambah EF Core
-builder.Services.AddDbContext<PerpustakaanContext>(options =>
+builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.

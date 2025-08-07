@@ -1,10 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using perpuss.Data;
+using perpuss.Models;
 
 public class BookController : Controller
 {
-    public IActionResult Index()
+    private readonly LibraryContext _context;
+
+    public BookController(LibraryContext context)
     {
-        return View();
+        _context = context;
+    }
+
+    // Tampilkan semua buku
+    public async Task<IActionResult> Index()
+    {
+        var data = await _context.Books.ToListAsync();
+        return View(data);
     }
 
     public IActionResult Create()

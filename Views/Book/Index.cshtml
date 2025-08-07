@@ -1,3 +1,5 @@
+@model IEnumerable<perpuss.Models.Book>
+
 @{
     ViewData["Title"] = "Daftar Buku";
 }
@@ -23,15 +25,14 @@
                 </tr>
             </thead>
             <tbody class="text-gray-800 text-sm">
+                @foreach (var b in Model) 
+                {
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="p-2 sm:p-4">
-                        <div class="font-medium">Laskar Pelangi</div>
-                        <div class="text-gray-500 text-xs sm:hidden">Andrea Hirata • 2005</div>
-                    </td>
-                    <td class="p-2 sm:p-4 hidden sm:table-cell">Andrea Hirata</td>
-                    <td class="p-2 sm:p-4 hidden sm:table-cell">2005</td>
-                    <td class="p-2 sm:p-4 hidden md:table-cell">978-979-22-5300-7</td>
-                    <td class="p-2 sm:p-4">10</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Title</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Author</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.PublicationYear</td>
+                    <td class="p-2 sm:p-4 hidden md:table-cell">@b.ISBN</td>
+                    <td class="p-2 sm:p-4">@b.StockQuantity</td>
                     <td class="p-2 sm:p-4">
                         <div class="flex flex-col sm:flex-row gap-2 sm:space-x-2">
                             <a href="/Book/Edit/1" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm text-center">Edit</a>
@@ -39,6 +40,7 @@
                         </div>
                     </td>
                 </tr>
+                }
             </tbody>
         </table>
     </div>
