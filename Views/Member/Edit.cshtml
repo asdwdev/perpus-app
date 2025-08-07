@@ -1,7 +1,7 @@
 @model perpuss.Models.Member
 
 @{
-  ViewData["Title"] = "Tambah Anggota";
+  ViewData["Title"] = "Edit Anggota";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,9 @@
 <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
   <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Tambah Data Anggota</h1>
 
-  <form asp-action="Create" method="post" class="space-y-5">
+  <form asp-action="Edit" method="post" class="space-y-5">
+    <input type="hidden" asp-for="Id" />
+
     <div>
       <label class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
       <input type="text" asp-for="Name"
@@ -46,16 +48,16 @@
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-gray-700">Angkatan</label>
-      <select asp-for="EnrollmentYear"
-              class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="">-- Pilih Tahun --</option>
-          @for (int year = 1990; year <= DateTime.Now.Year; year++)
-          {
-              <option value="@year">@year</option>
-          }
-      </select>
-      <span asp-validation-for="EnrollmentYear" class="text-red-500 text-sm"></span>
+        <label class="block text-sm font-medium text-gray-700">Angkatan</label>
+        <select asp-for="EnrollmentYear"
+                class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">-- Pilih Tahun --</option>
+            @for (int year = 1990; year <= DateTime.Now.Year; year++)
+            {
+                <option value="@year">@year</option>
+            }
+        </select>
+        <span asp-validation-for="EnrollmentYear" class="text-red-500 text-sm"></span>
     </div>
 
     <div class="flex justify-between">

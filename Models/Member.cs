@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace perpuss.Models
@@ -12,6 +13,16 @@ namespace perpuss.Models
         [Required]
         public string StudentId { get; set; }
 
+        [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string Faculty { get; set; }
+
+        [Required]
+        public string ProgramStudy { get; set; }
+
+        [Required]
+        public int EnrollmentYear { get; set; }
     }
 }
