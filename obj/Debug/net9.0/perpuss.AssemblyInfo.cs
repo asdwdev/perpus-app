@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("perpuss")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09a3a74ce543227a798468de89174354b39898d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("perpuss")]
 [assembly: System.Reflection.AssemblyTitleAttribute("perpuss")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
