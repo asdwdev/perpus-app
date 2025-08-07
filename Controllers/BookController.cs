@@ -18,7 +18,7 @@ public class BookController : Controller
         var data = await _context.Books.ToListAsync();
         return View(data);
     }
-    
+
     // Tampilkan form tambah
     public IActionResult Create()
     {
@@ -43,9 +43,20 @@ public class BookController : Controller
         return View();
     }
 
-    public IActionResult Delete(int id)
+    // Proses hapus
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        return View();
+        var book = await _context.Books.FindAsync(id);
+
+        if (book == null)
+        {
+            return NotFound(); 
+        }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Details(int id)
