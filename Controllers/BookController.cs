@@ -38,9 +38,24 @@ public class BookController : Controller
         return View(book);
     }
 
-    public IActionResult Edit(int id)
+   // Tampilkan form edit
+    public async Task<IActionResult> Edit(int id)
     {
-        return View();
+        var book = await _context.Books.FindAsync(id);
+        return View(book);
+    }
+
+    // Simpan perubahan
+    [HttpPost]
+    public async Task<IActionResult> Edit(Book book)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(book);
     }
 
     // Proses hapus
