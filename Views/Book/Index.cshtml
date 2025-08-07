@@ -1,0 +1,65 @@
+@{
+    ViewData["Title"] = "Daftar Buku";
+}
+
+<div class="max-w-6xl mx-auto mt-4 sm:mt-10 p-4 sm:p-6 bg-white rounded-xl shadow-md border border-gray-200">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-800">📚 Daftar Buku</h2>
+        <a href="/Book/Create" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-center">
+            + Tambah Buku
+        </a>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow -mx-4 sm:mx-0">
+        <table class="w-full text-left table-auto">
+            <thead class="bg-gray-100 text-gray-700 text-xs sm:text-sm uppercase tracking-wider">
+                <tr>
+                    <th class="p-2 sm:p-4">Judul</th>
+                    <th class="p-2 sm:p-4 hidden sm:table-cell">Penulis</th>
+                    <th class="p-2 sm:p-4 hidden sm:table-cell">Tahun Terbit</th>
+                    <th class="p-2 sm:p-4 hidden md:table-cell">ISBN</th>
+                    <th class="p-2 sm:p-4">Stok</th>
+                    <th class="p-2 sm:p-4">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800 text-sm">
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-2 sm:p-4">
+                        <div class="font-medium">Laskar Pelangi</div>
+                        <div class="text-gray-500 text-xs sm:hidden">Andrea Hirata • 2005</div>
+                    </td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">Andrea Hirata</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">2005</td>
+                    <td class="p-2 sm:p-4 hidden md:table-cell">978-979-22-5300-7</td>
+                    <td class="p-2 sm:p-4">10</td>
+                    <td class="p-2 sm:p-4">
+                        <div class="flex flex-col sm:flex-row gap-2 sm:space-x-2">
+                            <a href="/Book/Edit/1" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm text-center">Edit</a>
+                            <a href="/Book/Delete/1" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm text-center">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function confirmDelete(deleteUrl) {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data buku ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = deleteUrl;
+            }
+        });
+    }
+</script>

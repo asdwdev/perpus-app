@@ -1,0 +1,47 @@
+@{
+  ViewData["Title"] = "Tambah Anggota";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Tambah Data Anggota</h1>
+
+  <form action="/Member/Create" method="post" class="space-y-5">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
+      <input type="text" name="nama"
+        class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Contoh: Farhan Fahrezy">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">NIM</label>
+      <input type="text" name="nim"
+        class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Contoh: G64190000">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Program Studi</label>
+      <input type="text" name="prodi"
+        class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Contoh: Ilmu Komputer">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Angkatan</label>
+      <input type="number" name="angkatan"
+        class="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Contoh: 2022">
+    </div>
+
+    <div class="flex justify-between">
+      <a href="/Member" class="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Kembali</a>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+    </div>
+  </form>
+</div>
+
+
+</html>

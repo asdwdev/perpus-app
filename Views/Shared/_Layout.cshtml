@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Perpustakaan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/perpuss.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <nav class="bg-white border-r shadow-lg w-64 flex-shrink-0 fixed h-full hidden lg:block">
+            <div class="p-6 border-b">
+                <a class="text-2xl font-bold text-gray-800 hover:text-blue-600 flex items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-book mr-2"></i>
+                    Perpustakaan
+                </a>
+            </div>
+            
+            <div class="py-6">
+                <ul class="space-y-2 px-4">
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-home mr-3 w-5"></i>
+                            Beranda
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Book" asp-action="Index">
+                            <i class="fas fa-book-open mr-3 w-5"></i>
+                            Buku
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Member" asp-action="Index">
+                            <i class="fas fa-users mr-3 w-5"></i>
+                            Anggota
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Loan" asp-action="Index">
+                            <i class="fas fa-hand-holding mr-3 w-5"></i>
+                            Peminjaman
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Return" asp-action="Index">
+                            <i class="fas fa-undo mr-3 w-5"></i>
+                            Pengembalian
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Report" asp-action="Index">
+                            <i class="fas fa-chart-bar mr-3 w-5"></i>
+                            Laporan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Mobile Overlay -->
+        <div class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden transition-opacity duration-300" id="mobile-overlay"></div>
+
+        <!-- Mobile Sidebar -->
+        <nav class="fixed top-0 left-0 bg-white w-64 h-full shadow-lg z-50 transform -translate-x-full lg:hidden transition-transform duration-300 ease-in-out overflow-y-auto" id="mobile-sidebar">
+            <div class="p-6 border-b flex justify-between items-center">
+                <a class="text-2xl font-bold text-gray-800 flex items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-book mr-2"></i>
+                    Perpustakaan
+                </a>
+                <button class="text-gray-600 hover:text-gray-800" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="py-6">
+                <ul class="space-y-2 px-4">
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-home mr-3 w-5"></i>
+                            Beranda
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Book" asp-action="Index">
+                            <i class="fas fa-book-open mr-3 w-5"></i>
+                            Buku
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Member" asp-action="Index">
+                            <i class="fas fa-users mr-3 w-5"></i>
+                            Anggota
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Loan" asp-action="Index">
+                            <i class="fas fa-hand-holding mr-3 w-5"></i>
+                            Peminjaman
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Return" asp-action="Index">
+                            <i class="fas fa-undo mr-3 w-5"></i>
+                            Pengembalian
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200" asp-area="" asp-controller="Report" asp-action="Index">
+                            <i class="fas fa-chart-bar mr-3 w-5"></i>
+                            Laporan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col lg:ml-64">
+            <!-- Top Header untuk Mobile -->
+            <header class="lg:hidden bg-white border-b shadow-sm sticky top-0 z-30">
+                <div class="flex items-center justify-between p-4">
+                    <button class="text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-2" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-lg font-semibold text-gray-800">Perpustakaan</h1>
+                    <div></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 relative">
+                <div class="container mx-auto px-4 py-6 sm:px-6 lg:px-8 max-w-7xl">
+                    @RenderBody()
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="fixed bottom-0 left-0 w-full bg-white text-black p-4">
+                <div class="container mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
+                    <p>&copy; 2025 - perpuss</p>
+                    <a class="hover:underline text-gray-700" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileSidebar = document.getElementById("mobile-sidebar");
+        const mobileOverlay = document.getElementById("mobile-overlay");
+        const closeSidebar = document.getElementById("close-sidebar");
+
+        function openMobileMenu() {
+            mobileSidebar.classList.remove("-translate-x-full");
+            mobileOverlay.classList.remove("hidden");
+        }
+
+        function closeMobileMenu() {
+            mobileSidebar.classList.add("-translate-x-full");
+            mobileOverlay.classList.add("hidden");
+        }
+
+        mobileMenuButton.addEventListener("click", openMobileMenu);
+        closeSidebar.addEventListener("click", closeMobileMenu);
+        mobileOverlay.addEventListener("click", closeMobileMenu);
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileSidebar.querySelectorAll("a");
+        mobileLinks.forEach(link => {
+            link.addEventListener("click", closeMobileMenu);
+        });
+    </script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

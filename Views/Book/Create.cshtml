@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Create Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tambah Buku Baru</h2>
+
+    <form method="post" class="space-y-6">
+        <!-- Judul Buku -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">Judul Buku</label>
+            <input type="text" name="Title" placeholder="Masukkan judul buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Penulis -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">Penulis</label>
+            <input type="text" name="Author" placeholder="Nama penulis" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Tahun Terbit -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">Tahun Terbit</label>
+            <input type="number" name="Year" placeholder="Contoh: 2023" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- ISBN -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">ISBN</label>
+            <input type="text" name="ISBN" placeholder="Masukkan ISBN buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        </div>
+
+        <!-- Stok -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">Stok</label>
+            <input type="number" name="Stock" placeholder="Jumlah stok buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">    
+        </div>
+
+        <!-- Tombol -->
+        <div class="flex justify-end gap-4">
+            <a href="@Url.Action("Index", "Book")" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-lg">Batal</a>
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Simpan</button>
+        </div>
+    </form>
+</div>
