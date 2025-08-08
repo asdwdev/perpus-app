@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using perpuss.Data;
 
@@ -11,9 +12,11 @@ using perpuss.Data;
 namespace perpuss.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20250807155504_UpdateBookWithLoanList")]
+    partial class UpdateBookWithLoanList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,9 +139,9 @@ namespace perpuss.Migrations
                         .IsRequired();
 
                     b.HasOne("perpuss.Models.Member", "Member")
-                        .WithMany("Loans")
+                        .WithMany()
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -147,11 +150,6 @@ namespace perpuss.Migrations
                 });
 
             modelBuilder.Entity("perpuss.Models.Book", b =>
-                {
-                    b.Navigation("Loans");
-                });
-
-            modelBuilder.Entity("perpuss.Models.Member", b =>
                 {
                     b.Navigation("Loans");
                 });

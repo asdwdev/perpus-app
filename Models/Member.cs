@@ -7,22 +7,25 @@ namespace perpuss.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Nama mahasiswa wajib diisi")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "NIM wajib diisi")]
         public string StudentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email wajib diisi")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Fakultas wajib diisi")]
         public string Faculty { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Program studi wajib diisi")]
         public string ProgramStudy { get; set; }
 
-        [Required]
-        public int EnrollmentYear { get; set; }
+        [Required(ErrorMessage = "Angkatan wajib diisi")]
+
+        public int? EnrollmentYear { get; set; }
+
+        public ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }
 }

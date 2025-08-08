@@ -7,14 +7,14 @@
 
 <div class="max-w-6xl mx-auto mt-4 sm:mt-10 p-4 sm:p-6 bg-white rounded-xl shadow-md border border-gray-200">
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
-    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Daftar Anggota Mahasiswa</h2>
+    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">🤵 Daftar Anggota Mahasiswa</h2>
     <a href="/Member/Create" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 text-center">+ Tambah Anggota</a>
   </div>
   <div class="overflow-x-auto bg-white rounded-lg shadow -mx-4 sm:mx-0">
     <table class="w-full text-left table-auto">
       <thead class="bg-gray-100 text-gray-700 text-xs sm:text-sm uppercase tracking-wider">
         <tr>
-          <th class="p-2 sm:p-4">No</th>
+          <th class="p-2 sm:p-4">#</th>
           <th class="p-2 sm:p-4 hidden sm:table-cell">NIM</th>
           <th class="p-2 sm:p-4">Nama</th>
           <th class="p-2 sm:p-4 hidden md:table-cell">Email</th>
@@ -25,12 +25,13 @@
         </tr>
       </thead>
       <tbody class="text-sm">
-        <!-- Contoh data statis -->
-        
+        @{
+          int no = 1;
+        }
         @foreach (var b in Model) 
         {
         <tr class="bg-white hover:bg-gray-50 border-b">
-          <td class="p-2 sm:p-4">1</td>
+          <td class="p-2 sm:p-4">@no</td>
           <td class="p-2 sm:p-4 hidden sm:table-cell">@b.StudentId</td>
           <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Name</td>
           <td class="p-2 sm:p-4 hidden md:table-cell">@b.Email</td>
@@ -47,7 +48,8 @@
                   </form>
               </div>
           </td>
-        </tr>
+        </tr> 
+        no++;
         }
       </tbody>
     </table>

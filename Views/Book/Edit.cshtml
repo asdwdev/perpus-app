@@ -14,36 +14,41 @@
         <!-- Judul Buku -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-700">Judul Buku</label>
-            <input type="text" asp-for="Title" placeholder="Masukkan judul buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" asp-for="Title" placeholder="Masukkan judul buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <span asp-validation-for="Title" class="text-red-500 text-sm"></span>
         </div>
 
         <!-- Penulis -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-700">Penulis</label>
-            <input type="text" asp-for="Author" placeholder="Nama penulis" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" asp-for="Author" placeholder="Nama penulis" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <span asp-validation-for="Author" class="text-red-500 text-sm"></span>
         </div>
 
         <!-- Tahun Terbit -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-700">Tahun Terbit</label>
-            <input type="number" asp-for="PublicationYear" placeholder="Contoh: 2023" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="number" asp-for="PublicationYear" placeholder="Contoh: 2023" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <span asp-validation-for="PublicationYear" class="text-red-500 text-sm"></span>
         </div>
 
         <!-- ISBN -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-700">ISBN</label>
-            <input type="text" asp-for="ISBN" placeholder="Masukkan ISBN buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" asp-for="ISBN" placeholder="Masukkan ISBN buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <span asp-validation-for="ISBN" class="text-red-500 text-sm"></span>
         </div>
 
         <!-- Stok -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-700">Stok</label>
-            <input type="number" asp-for="StockQuantity" placeholder="Jumlah stok buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="number" asp-for="StockQuantity" placeholder="Jumlah stok buku" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <span asp-validation-for="StockQuantity" class="text-red-500 text-sm"></span>
         </div>
 
         <!-- Tombol -->
-        <div class="flex justify-end gap-4">
-            <a href="@Url.Action("Index", "Book")" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-lg">Batal</a>
+        <div class="flex justify-end gap-3">
+            <a href="/Book" class="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Kembali</a>
             <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Simpan</button>
         </div>
     </form>

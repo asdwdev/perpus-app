@@ -1,68 +1,115 @@
+
 @{
-  ViewData["Title"] = "Pengembalian Buku";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Pengembalian Buku";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var members = ViewBag.Members as List<SelectListItem>;
 }
 
+<h2 class="text-xl font-semibold mb-4">Form Pengembalian Buku</h2>
 
-<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
-  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Form Pengembalian Buku</h1>
-
-  <form onsubmit="return hitungDenda()" method="post" class="space-y-5">
+<form method="post" class="space-y-5" id="returnForm">
     <div>
-      <label class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
-      <input type="text" name="nama" required class="mt-1 block w-full px-4 py-2 border rounded-md">
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Tanggal Pinjam</label>
-      <input type="date" id="tanggalPinjam" name="tanggalPinjam" value="2025-07-28" readonly
-        class="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600">
+        <label class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
+        <select id="memberSelect" name="memberId" required class="mt-1 block w-full px-4 py-2 border rounded-md">
+            <option value="">-- Pilih Mahasiswa --</option>
+            @foreach (var m in members)
+            {
+                <option value="@m.Value">@m.Text</option>
+            }
+        </select>
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-gray-700">Tanggal Kembali</label>
-      <input type="date" id="tanggalKembali" name="tanggalKembali" required
-        class="mt-1 block w-full px-4 py-2 border rounded-md">
+        <label class="block text-sm font-medium text-gray-700">Judul Buku</label>
+        <input type="text" id="bookTitle" readonly class="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100">
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-1/2">
+          <label class="block text-sm font-medium text-gray-700">Tanggal Pinjam</label>
+          <input type="date" id="tanggalPinjam" name="tanggalPinjam" readonly class="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100">
+      </div>
+
+      <div class="w-1/2">
+          <label class="block text-sm font-medium text-gray-700">Tanggal Kembali Seharusnya</label>
+          <input type="date" id="tanggalJatuhTempo" name="tanggalJatuhTempo" readonly class="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100">
+      </div>
+    </div>
+
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Dikembalikan Pada</label>
+        <input type="date" id="tanggalDikembalikan" name="tanggalDikembalikan" required class="mt-1 block w-full px-4 py-2 border rounded-md">
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-gray-700">Denda (Rp)</label>
-      <input type="text" id="denda" name="denda" readonly
-        class="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100 text-red-600 font-bold">
+        <label class="block text-sm font-medium text-gray-700">Denda (Rp)</label>
+        <input type="text" id="denda" name="denda" readonly class="mt-1 block w-full px-4 py-2 border rounded-md text-red-600 font-bold bg-gray-100">
     </div>
 
-    <div class="flex justify-between">
-      <a href="/Return" class="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Kembali</a>
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Kembalikan</button>
+    <div class="flex justify-end gap-3">
+        <a href="/Return" class="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Reset</a>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Kembalikan</button>
     </div>
-  </form>
-</div>
+</form>
 
-<script>
-  function hitungDenda() {
-    const tanggalPinjam = new Date(document.getElementById("tanggalPinjam").value);
-    const tanggalKembali = new Date(document.getElementById("tanggalKembali").value);
-    const dendaPerHari = 1000;
-    const batasHari = 7;
+@section Scripts {
+    <script>
+        document.getElementById('memberSelect').addEventListener('change', function () {
+            const memberId = this.value;
+            if (memberId) {
+                fetch(`/Return/GetLoanData?memberId=${memberId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('bookTitle').value = data.bookTitle;
+                        document.getElementById('tanggalPinjam').value = data.loanDate;
 
-    const selisihWaktu = tanggalKembali - tanggalPinjam;
-    const selisihHari = Math.ceil(selisihWaktu / (1000 * 60 * 60 * 24));
+                        const tanggalPinjam = new Date(data.loanDate);
+                        tanggalPinjam.setDate(tanggalPinjam.getDate() + 7);
 
-    let denda = 0;
-    if (selisihHari > batasHari) {
-      denda = (selisihHari - batasHari) * dendaPerHari;
-    }
+                        document.getElementById('tanggalJatuhTempo').value = tanggalPinjam.toISOString().split('T')[0];
 
-    document.getElementById("denda").value = denda;
+                        document.getElementById('denda').value = '';
+                        document.getElementById('tanggalKembali').value = '';
+                    });
+            }
+        });
 
-    // Cek validasi agar tidak bisa submit langsung
-    if (tanggalKembali < tanggalPinjam) {
-      alert("Tanggal kembali tidak boleh sebelum tanggal pinjam!");
-      return false;
-    }
+        document.getElementById('tanggalDikembalikan').addEventListener('change', function () {
+            const pinjam = new Date(document.getElementById('tanggalPinjam').value);
+            const kembali = new Date(this.value);
 
-    return true;
-  }
-</script>
+            const diffTime = kembali - pinjam;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const terlambat = diffDays - 7;
 
-</html>
+            const denda = terlambat > 0 ? terlambat * 1000 : 0;
+            document.getElementById('denda').value = denda;
+        });
+
+        @if (TempData["Success"] != null && TempData["Source"]?.ToString() == "Return")
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '@TempData["Success"]'
+                });
+            </text>
+        }
+
+        document.getElementById('returnForm').addEventListener('submit', function (e) {
+            const tanggalPinjam = new Date(document.getElementById('tanggalPinjam').value);
+            const tanggalDikembalikan = new Date(document.getElementById('tanggalDikembalikan').value);
+
+            if (tanggalDikembalikan < tanggalPinjam) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validasi Gagal',
+                    text: 'Tanggal dikembalikan tidak boleh lebih awal dari tanggal pinjam.'
+                });
+            }
+        });
+    </script>
+}

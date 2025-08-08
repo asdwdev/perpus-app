@@ -16,6 +16,7 @@
         <table class="w-full text-left table-auto">
             <thead class="bg-gray-100 text-gray-700 text-xs sm:text-sm uppercase tracking-wider">
                 <tr>
+                    <th class="p-2 sm:p-4">#</th>
                     <th class="p-2 sm:p-4">Judul</th>
                     <th class="p-2 sm:p-4 hidden sm:table-cell">Penulis</th>
                     <th class="p-2 sm:p-4 hidden sm:table-cell">Tahun Terbit</th>
@@ -25,9 +26,13 @@
                 </tr>
             </thead>
             <tbody class="text-gray-800 text-sm">
+                @{
+                    int no = 1;
+                }
                 @foreach (var b in Model) 
                 {
                 <tr class="border-b hover:bg-gray-50">
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@no</td>
                     <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Title</td>
                     <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Author</td>
                     <td class="p-2 sm:p-4 hidden sm:table-cell">@b.PublicationYear</td>
@@ -44,6 +49,7 @@
                         </div>
                     </td>
                 </tr>
+                no++;
                 }
             </tbody>
         </table>
