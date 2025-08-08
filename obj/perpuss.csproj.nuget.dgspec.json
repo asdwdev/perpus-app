@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Farhanfahrezyy\\Documents\\Projects\\perpuss\\perpuss.csproj": {}
+    "C:\\Users\\Arya\\Desktop\\dotnet-projects\\perpus-app\\perpuss.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Farhanfahrezyy\\Documents\\Projects\\perpuss\\perpuss.csproj": {
+    "C:\\Users\\Arya\\Desktop\\dotnet-projects\\perpus-app\\perpuss.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Farhanfahrezyy\\Documents\\Projects\\perpuss\\perpuss.csproj",
+        "projectUniqueName": "C:\\Users\\Arya\\Desktop\\dotnet-projects\\perpus-app\\perpuss.csproj",
         "projectName": "perpuss",
-        "projectPath": "C:\\Users\\Farhanfahrezyy\\Documents\\Projects\\perpuss\\perpuss.csproj",
-        "packagesPath": "C:\\Users\\Farhanfahrezyy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Farhanfahrezyy\\Documents\\Projects\\perpuss\\obj\\",
+        "projectPath": "C:\\Users\\Arya\\Desktop\\dotnet-projects\\perpus-app\\perpuss.csproj",
+        "packagesPath": "C:\\Users\\Arya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Arya\\Desktop\\dotnet-projects\\perpus-app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Farhanfahrezyy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Arya\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -43,6 +43,22 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2025.7.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

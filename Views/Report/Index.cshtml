@@ -1,3 +1,5 @@
+@model IEnumerable<perpuss.Models.Loan>
+
 @{
     ViewData["Title"] = "Laporan Transaksi";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +8,8 @@
 <div class="max-w-7xl mx-auto p-4 sm:p-6 mt-4 sm:mt-10 bg-white rounded-xl shadow-md border border-gray-200">
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
         <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Laporan Transaksi</h2>
-        <a href="#" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold text-center">
+        <a href="@Url.Action("ExportToPdf", "Report")"
+            class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold text-center">
             <i class="fas fa-file-pdf mr-2"></i>Export PDF
         </a>
     </div>
@@ -25,36 +28,32 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-100 text-xs sm:text-sm text-gray-700">
-                <tr>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">1</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden sm:table-cell">Farhan Fahrezy</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">
-                        <div>Pemrograman Dasar</div>
-                        <div class="text-gray-500 text-xs sm:hidden">Farhan Fahrezy</div>
-                        <div class="text-gray-500 text-xs sm:hidden">01-08-2025 s/d 08-08-2025</div>
-                    </td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">01-08-2025</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">08-08-2025</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">
-                        <span class="text-green-600 font-medium text-xs sm:text-sm">Dikembalikan</span>
-                    </td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">Rp 0</td>
-                </tr>
-                <tr>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">2</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden sm:table-cell">Arya Dimas Wicaksana</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">
-                        <div>Algoritma & Struktur Data</div>
-                        <div class="text-gray-500 text-xs sm:hidden">Arya Dimas Wicaksana</div>
-                        <div class="text-gray-500 text-xs sm:hidden">25-07-2025 s/d 05-08-2025</div>
-                    </td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">25-07-2025</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">05-08-2025</td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">
-                        <span class="text-red-600 font-medium text-xs sm:text-sm">Terlambat</span>
-                    </td>
-                    <td class="px-3 sm:px-6 py-2 sm:py-4">Rp 10.000</td>
-                </tr>
+                @foreach (var b in Model)
+                {
+                    <tr>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4">1</td>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4 hidden sm:table-cell">@b.Member?.Name</td>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4">
+                            <div>@b.Book?.Title</div>
+                        </td>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">@b.LoanDate.ToString("d/M/yyyy")</td>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4 hidden md:table-cell">@b.ReturnDate.ToString("d/M/yyyy")</td>
+                        <td class="px-3 sm:px-6 py-2 sm:py-4">
+                            @if (b.IsReturned)
+                            {
+                                <span class="text-green-600 font-medium text-xs sm:text-sm">Sudah Dikembalikan</span>
+                            }
+                            else
+                            {
+                                <span class="text-red-600 font-medium text-xs sm:text-sm">Belum Dikembalikan</span>
+                            }
+                        </td>
+
+                        <td class="px-3 sm:px-6 py-2 sm:py-4">
+                            Rp @(b.Fine.HasValue? b.Fine.Value.ToString("N0") : "0")
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

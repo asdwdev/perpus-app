@@ -1,3 +1,5 @@
+@model IEnumerable<perpuss.Models.Book>
+
 @{
     ViewData["Title"] = "Daftar Buku";
 }
@@ -14,31 +16,41 @@
         <table class="w-full text-left table-auto">
             <thead class="bg-gray-100 text-gray-700 text-xs sm:text-sm uppercase tracking-wider">
                 <tr>
+                    <th class="p-2 sm:p-4">#</th>
                     <th class="p-2 sm:p-4">Judul</th>
                     <th class="p-2 sm:p-4 hidden sm:table-cell">Penulis</th>
                     <th class="p-2 sm:p-4 hidden sm:table-cell">Tahun Terbit</th>
                     <th class="p-2 sm:p-4 hidden md:table-cell">ISBN</th>
                     <th class="p-2 sm:p-4">Stok</th>
-                    <th class="p-2 sm:p-4">Aksi</th>
+                    <th class="p-2 sm:p-4 text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-gray-800 text-sm">
+                @{
+                    int no = 1;
+                }
+                @foreach (var b in Model) 
+                {
                 <tr class="border-b hover:bg-gray-50">
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@no</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Title</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.Author</td>
+                    <td class="p-2 sm:p-4 hidden sm:table-cell">@b.PublicationYear</td>
+                    <td class="p-2 sm:p-4 hidden md:table-cell">@b.ISBN</td>
+                    <td class="p-2 sm:p-4">@b.StockQuantity</td>
                     <td class="p-2 sm:p-4">
-                        <div class="font-medium">Laskar Pelangi</div>
-                        <div class="text-gray-500 text-xs sm:hidden">Andrea Hirata • 2005</div>
-                    </td>
-                    <td class="p-2 sm:p-4 hidden sm:table-cell">Andrea Hirata</td>
-                    <td class="p-2 sm:p-4 hidden sm:table-cell">2005</td>
-                    <td class="p-2 sm:p-4 hidden md:table-cell">978-979-22-5300-7</td>
-                    <td class="p-2 sm:p-4">10</td>
-                    <td class="p-2 sm:p-4">
-                        <div class="flex flex-col sm:flex-row gap-2 sm:space-x-2">
-                            <a href="/Book/Edit/1" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm text-center">Edit</a>
-                            <a href="/Book/Delete/1" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm text-center">Hapus</a>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:space-x-2 justify-center">
+                            <a href="/Book/Edit/@b.Id" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm text-center">Edit</a>
+                             <form method="post" asp-action="Delete" asp-route-id="@b.Id" class="delete-form" style="display:inline;">
+                                <button type="button" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm text-center btn-hapus">
+                                    Hapus
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>
+                no++;
+                }
             </tbody>
         </table>
     </div>
@@ -46,20 +58,28 @@
 
 
 <script>
-    function confirmDelete(deleteUrl) {
-        Swal.fire({
-            title: 'Yakin ingin menghapus?',
-            text: "Data buku ini akan dihapus secara permanen!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e3342f',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = deleteUrl;
-            }
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll(".btn-hapus");
+
+        deleteButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const form = btn.closest("form");
+
+                Swal.fire({
+                    title: "Yakin ingin menghapus?",
+                    text: "Data buku akan dihapus permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
         });
-    }
+    });
 </script>

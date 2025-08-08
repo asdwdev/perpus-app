@@ -1,25 +1,77 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using perpuss.Data;
+using perpuss.Models;
 
 public class BookController : Controller
 {
-    public IActionResult Index()
+    private readonly LibraryContext _context;
+
+    public BookController(LibraryContext context)
     {
-        return View();
+        _context = context;
     }
 
+    // Tampilkan semua buku
+    public async Task<IActionResult> Index()
+    {
+        var data = await _context.Books.ToListAsync();
+        return View(data);
+    }
+
+    // Tampilkan form tambah
     public IActionResult Create()
     {
         return View();
     }
 
-    public IActionResult Edit(int id)
+    // Simpan data buku baru
+    [HttpPost]
+    public async Task<IActionResult> Create(Book book)
     {
-        return View();
+        if (ModelState.IsValid)
+        {
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(book);
     }
 
-    public IActionResult Delete(int id)
+   // Tampilkan form edit
+    public async Task<IActionResult> Edit(int id)
     {
-        return View();
+        var book = await _context.Books.FindAsync(id);
+        return View(book);
+    }
+
+    // Simpan perubahan
+    [HttpPost]
+    public async Task<IActionResult> Edit(Book book)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(book);
+    }
+
+    // Proses hapus
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var book = await _context.Books.FindAsync(id);
+
+        if (book == null)
+        {
+            return NotFound(); 
+        }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Details(int id)
